@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URBAN HOMES | 都市型賃貸・売買不動産</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --charcoal: #1c1c1e;
+      --gold: #b8960c;
+      --gold-light: #d4a017;
+      --cream: #faf9f7;
+      --light: #f5f4f0;
+      --gray: #888;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Hiragino Mincho ProN', 'Yu Mincho', Georgia, serif; color: var(--charcoal); background: var(--cream); line-height: 1.8; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 56px; background: rgba(28,28,30,0.97); backdrop-filter: blur(10px);
+    }
+    .nav-logo { font-size: 1.3rem; letter-spacing: 0.35em; color: white; text-decoration: none; font-weight: 300; }
+    .nav-logo span { color: var(--gold-light); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { text-decoration: none; font-size: 0.72rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.6); font-family: 'Helvetica Neue', sans-serif; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-cta { background: var(--gold); color: white; padding: 10px 24px; text-decoration: none; font-family: 'Helvetica Neue', sans-serif; font-size: 0.75rem; letter-spacing: 0.15em; transition: background 0.3s; }
+    .nav-cta:hover { background: var(--gold-light); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; background: var(--charcoal);
+      display: flex; align-items: flex-end; padding: 120px 80px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero-visual { position: absolute; inset: 0; background: linear-gradient(160deg, #0a0a0a 0%, #1c1c1e 40%, #2a2a2a 100%); }
+    .hero-visual::after { content: '🏙️'; position: absolute; right: 5%; bottom: 0; font-size: 20rem; opacity: 0.06; line-height: 1; }
+    .hero-content { position: relative; z-index: 1; max-width: 700px; color: white; }
+    .hero-en { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.6em; color: var(--gold-light); margin-bottom: 28px; display: block; }
+    .hero-title { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 300; line-height: 1.25; margin-bottom: 40px; }
+    .hero-title strong { font-weight: 700; }
+    .hero-desc { color: rgba(255,255,255,0.6); font-size: 0.95rem; line-height: 2.2; margin-bottom: 56px; max-width: 500px; }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 72px; }
+    .btn-gold { display: inline-flex; align-items: center; gap: 14px; padding: 18px 40px; background: var(--gold); color: white; text-decoration: none; font-family: 'Helvetica Neue', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; transition: all 0.3s; }
+    .btn-gold:hover { background: var(--gold-light); }
+    .btn-outline { display: inline-flex; align-items: center; gap: 14px; padding: 18px 40px; border: 1px solid rgba(255,255,255,0.3); color: white; text-decoration: none; font-family: 'Helvetica Neue', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; transition: all 0.3s; }
+    .btn-outline:hover { border-color: var(--gold-light); color: var(--gold-light); }
+    .hero-scroll { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.4em; color: rgba(255,255,255,0.3); display: flex; align-items: center; gap: 16px; }
+    .hero-scroll::before { content: ''; width: 40px; height: 1px; background: rgba(255,255,255,0.2); }
+
+    /* SEARCH */
+    .search { padding: 48px 80px; background: white; box-shadow: 0 4px 40px rgba(0,0,0,0.1); }
+    .search-title { font-size: 0.7rem; letter-spacing: 0.3em; color: var(--gold); font-family: 'Helvetica Neue', sans-serif; margin-bottom: 24px; display: block; }
+    .search-row { display: flex; gap: 16px; align-items: flex-end; flex-wrap: wrap; }
+    .search-field { flex: 1; min-width: 160px; }
+    .search-label { font-size: 0.72rem; color: var(--gray); margin-bottom: 8px; display: block; font-family: 'Helvetica Neue', sans-serif; }
+    .search-select { width: 100%; padding: 12px 16px; border: 1px solid #ddd; background: white; font-size: 0.9rem; appearance: none; cursor: pointer; }
+    .search-btn { padding: 13px 32px; background: var(--charcoal); color: white; border: none; font-family: 'Helvetica Neue', sans-serif; font-size: 0.8rem; letter-spacing: 0.15em; cursor: pointer; white-space: nowrap; transition: background 0.3s; }
+    .search-btn:hover { background: var(--gold); }
+
+    /* FEATURED */
+    .featured { padding: 100px 80px; background: var(--cream); }
+    .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; }
+    .section-left .sec-en { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.5em; color: var(--gold); display: block; margin-bottom: 10px; }
+    .sec-title { font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 400; }
+    .sec-more { font-family: 'Helvetica Neue', sans-serif; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--gray); text-decoration: none; display: flex; align-items: center; gap: 8px; transition: color 0.3s; }
+    .sec-more:hover { color: var(--gold); }
+    .property-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .property-card { background: white; transition: all 0.3s; cursor: pointer; }
+    .property-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+    .property-image { aspect-ratio: 4/3; background: linear-gradient(135deg, #d4c9b5 0%, #b8a898 100%); display: flex; align-items: center; justify-content: center; font-size: 4rem; position: relative; overflow: hidden; }
+    .property-tag { position: absolute; top: 16px; left: 16px; background: var(--charcoal); color: white; padding: 4px 12px; font-family: 'Helvetica Neue', sans-serif; font-size: 0.68rem; letter-spacing: 0.1em; }
+    .property-tag.new { background: var(--gold); }
+    .property-body { padding: 24px; }
+    .property-area { font-family: 'Helvetica Neue', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--gray); margin-bottom: 8px; }
+    .property-name { font-size: 1rem; margin-bottom: 12px; line-height: 1.5; }
+    .property-price { font-family: 'Helvetica Neue', sans-serif; font-size: 1.4rem; color: var(--charcoal); margin-bottom: 4px; }
+    .property-price small { font-size: 0.75rem; color: var(--gray); }
+    .property-specs { font-size: 0.78rem; color: var(--gray); font-family: 'Helvetica Neue', sans-serif; }
+
+    /* SERVICES */
+    .services { padding: 100px 80px; background: var(--charcoal); color: white; }
+    .services .sec-en { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.5em; color: var(--gold-light); display: block; margin-bottom: 16px; }
+    .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 64px; }
+    .service-card { background: #2a2a2a; padding: 48px 32px; transition: background 0.3s; }
+    .service-card:hover { background: var(--gold); }
+    .service-icon { font-size: 2.5rem; margin-bottom: 20px; display: block; }
+    .service-name { font-size: 1rem; margin-bottom: 12px; letter-spacing: 0.05em; }
+    .service-desc { font-size: 0.82rem; color: rgba(255,255,255,0.6); line-height: 1.8; }
+    .service-card:hover .service-desc { color: rgba(255,255,255,0.85); }
+
+    /* VOICE */
+    .voice { padding: 100px 80px; background: var(--light); }
+    .voice-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1000px; margin: 0 auto; }
+    .voice-card { background: white; padding: 36px 28px; }
+    .voice-type { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.3em; color: var(--gold); margin-bottom: 16px; }
+    .voice-text { font-size: 0.88rem; line-height: 2; margin-bottom: 20px; }
+    .voice-author { font-size: 0.78rem; color: var(--gray); font-family: 'Helvetica Neue', sans-serif; }
+
+    /* CTA */
+    .cta { padding: 100px 80px; background: var(--gold); color: white; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .cta-title { font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 400; margin-bottom: 20px; line-height: 1.5; }
+    .cta-desc { opacity: 0.85; margin-bottom: 40px; font-size: 0.92rem; line-height: 2; }
+    .btn-dark { display: inline-flex; align-items: center; gap: 14px; padding: 18px 40px; background: var(--charcoal); color: white; text-decoration: none; font-family: 'Helvetica Neue', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; transition: all 0.3s; }
+    .btn-dark:hover { background: #000; }
+    .cta-contact { }
+    .contact-item { padding: 32px; background: rgba(0,0,0,0.1); margin-bottom: 16px; }
+    .contact-label { font-family: 'Helvetica Neue', sans-serif; font-size: 0.65rem; letter-spacing: 0.3em; opacity: 0.7; margin-bottom: 8px; }
+    .contact-value { font-size: 1.4rem; font-weight: 300; }
+
+    footer { background: var(--charcoal); color: rgba(255,255,255,0.3); text-align: center; padding: 32px; font-family: 'Helvetica Neue', sans-serif; font-size: 0.72rem; letter-spacing: 0.1em; }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 24px 64px; }
+      .search { padding: 40px 24px; }
+      .search-row { flex-direction: column; }
+      .featured, .services, .voice { padding: 70px 24px; }
+      .property-grid, .services-grid, .voice-grid { grid-template-columns: 1fr; }
+      .section-head { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .cta { padding: 70px 24px; grid-template-columns: 1fr; gap: 40px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#" class="nav-logo">URBAN <span>HOMES</span></a>
+    <ul class="nav-links">
+      <li><a href="#featured">PROPERTY</a></li>
+      <li><a href="#services">SERVICE</a></li>
+      <li><a href="#cta">CONTACT</a></li>
+    </ul>
+    <a href="#cta" class="nav-cta">無料相談</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-visual"></div>
+    <div class="hero-content">
+      <span class="hero-en">URBAN HOMES / TOKYO REAL ESTATE</span>
+      <h1 class="hero-title">
+        理想の<strong>住まい</strong>で、<br>
+        理想の人生を。
+      </h1>
+      <p class="hero-desc">東京の優良物件を、プロのアドバイザーが<br>あなたのライフスタイルに合わせてご提案します。<br>賃貸・売買・投資まで、ワンストップで対応。</p>
+      <div class="hero-actions">
+        <a href="#featured" class="btn-gold">物件を探す</a>
+        <a href="#cta" class="btn-outline">無料相談する</a>
+      </div>
+      <div class="hero-scroll">SCROLL</div>
+    </div>
+  </section>
+
+  <div class="search">
+    <span class="search-title">PROPERTY SEARCH</span>
+    <div class="search-row">
+      <div class="search-field">
+        <label class="search-label">エリア</label>
+        <select class="search-select"><option>渋谷区</option><option>新宿区</option><option>港区</option><option>目黒区</option></select>
+      </div>
+      <div class="search-field">
+        <label class="search-label">種別</label>
+        <select class="search-select"><option>賃貸マンション</option><option>売買マンション</option><option>一戸建て</option><option>投資物件</option></select>
+      </div>
+      <div class="search-field">
+        <label class="search-label">賃料 / 価格</label>
+        <select class="search-select"><option>〜10万円</option><option>10〜20万円</option><option>20〜30万円</option><option>30万円〜</option></select>
+      </div>
+      <div class="search-field">
+        <label class="search-label">間取り</label>
+        <select class="search-select"><option>1K〜1LDK</option><option>2LDK</option><option>3LDK〜</option></select>
+      </div>
+      <button class="search-btn">検索する</button>
+    </div>
+  </div>
+
+  <section class="featured" id="featured">
+    <div class="section-head">
+      <div class="section-left">
+        <span class="sec-en">FEATURED PROPERTIES</span>
+        <h2 class="sec-title">注目物件</h2>
+      </div>
+      <a href="#" class="sec-more">すべての物件を見る →</a>
+    </div>
+    <div class="property-grid">
+      <div class="property-card">
+        <div class="property-image">🏢<span class="property-tag new">NEW</span></div>
+        <div class="property-body">
+          <div class="property-area">渋谷区 / 代官山</div>
+          <div class="property-name">代官山プレミアムレジデンス</div>
+          <div class="property-price">25.8<small>万円 / 月</small></div>
+          <div class="property-specs">2LDK / 72㎡ / 築3年 / 20F</div>
+        </div>
+      </div>
+      <div class="property-card">
+        <div class="property-image">🏗️<span class="property-tag">人気</span></div>
+        <div class="property-body">
+          <div class="property-area">港区 / 麻布十番</div>
+          <div class="property-name">麻布グランドタワー</div>
+          <div class="property-price">18.0<small>万円 / 月</small></div>
+          <div class="property-specs">1LDK / 55㎡ / 築1年 / 15F</div>
+        </div>
+      </div>
+      <div class="property-card">
+        <div class="property-image">🏠<span class="property-tag">おすすめ</span></div>
+        <div class="property-body">
+          <div class="property-area">目黒区 / 中目黒</div>
+          <div class="property-name">中目黒テラスレジデンス</div>
+          <div class="property-price">15.5<small>万円 / 月</small></div>
+          <div class="property-specs">2LDK / 65㎡ / 築5年 / 8F</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <span class="sec-en">OUR SERVICES</span>
+    <h2 class="sec-title" style="color:white;font-size:clamp(1.5rem,3vw,2.2rem);">サービス一覧</h2>
+    <div class="services-grid">
+      <div class="service-card"><span class="service-icon">🏠</span><div class="service-name">賃貸仲介</div><p class="service-desc">希望条件を丁寧にヒアリング。理想の賃貸物件をご紹介します。</p></div>
+      <div class="service-card"><span class="service-icon">🏢</span><div class="service-name">売買仲介</div><p class="service-desc">マンション・一戸建ての購入をサポート。資金計画から引渡しまで。</p></div>
+      <div class="service-card"><span class="service-icon">📈</span><div class="service-name">不動産投資</div><p class="service-desc">収益物件の選定から管理まで、投資をトータルサポートします。</p></div>
+      <div class="service-card"><span class="service-icon">🔑</span><div class="service-name">管理・運用</div><p class="service-desc">オーナー様の物件管理を代行。入居者対応・修繕手配まで。</p></div>
+    </div>
+  </section>
+
+  <section class="voice">
+    <div style="text-align:center;margin-bottom:56px;"><span style="font-family:'Helvetica Neue',sans-serif;font-size:0.65rem;letter-spacing:0.5em;color:var(--gold);display:block;margin-bottom:12px;">CUSTOMER VOICE</span><h2 class="sec-title">お客様の声</h2></div>
+    <div class="voice-grid">
+      <div class="voice-card"><div class="voice-type">賃貸 / 30代 Iさん</div><p class="voice-text">ライフスタイルを細かくヒアリングしてもらい、想定以上の物件を見つけてもらいました。スピーディーな対応で入居までスムーズでした。</p><div class="voice-author">2024年3月 入居</div></div>
+      <div class="voice-card"><div class="voice-type">購入 / 40代 Kさん</div><p class="voice-text">初めての不動産購入で不安でしたが、資金計画から丁寧に相談に乗っていただき、理想のマンションを購入できました。</p><div class="voice-author">2024年1月 購入</div></div>
+      <div class="voice-card"><div class="voice-type">投資 / 50代 Mさん</div><p class="voice-text">2棟目の投資マンション購入をサポートしてもらいました。収益シミュレーションが明確で安心して投資判断ができました。</p><div class="voice-author">2023年11月 購入</div></div>
+    </div>
+  </section>
+
+  <section class="cta" id="cta">
+    <div>
+      <h2 class="cta-title">まずは無料で<br>ご相談ください</h2>
+      <p class="cta-desc">物件探しから資金計画まで、<br>専任アドバイザーがご対応します。<br>オンライン・来店どちらでも可能です。</p>
+      <a href="#" class="btn-dark">無料相談を予約する</a>
+    </div>
+    <div class="cta-contact">
+      <div class="contact-item">
+        <div class="contact-label">TEL</div>
+        <div class="contact-value">03-XXXX-XXXX</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">MAIL</div>
+        <div class="contact-value">info@urbanhomes.jp</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">HOURS</div>
+        <div class="contact-value" style="font-size:1rem;">10:00 〜 19:00（水曜定休）</div>
+      </div>
+    </div>
+  </section>
+
+  <footer><p>© 2024 URBAN HOMES. ALL RIGHTS RESERVED.</p></footer>
+</body>
+</html>
